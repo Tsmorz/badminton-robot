@@ -3,8 +3,8 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from {{ cookiecutter.module_name }}.definitions import LogLevel
-from {{ cookiecutter.module_name }}.utils import setup_logger
+from badminton_robot.definitions import LogLevel
+from badminton_robot.utils import setup_logger
 
 
 def test_logger_init() -> None:

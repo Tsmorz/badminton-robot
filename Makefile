@@ -40,11 +40,11 @@ update-deep:
 	make update
 
 docker:
-	docker build --no-cache -f Dockerfile -t {{ cookiecutter.module_name }}-smoke .
-	docker run --rm {{ cookiecutter.module_name }}-smoke
+	docker build --no-cache -f Dockerfile -t badminton_robot-smoke .
+	docker run --rm badminton_robot-smoke
 
 app:
-	uv run python -m {{ cookiecutter.module_name }}
+	uv run python -m badminton_robot
 
 tree:
 	uv run python repo_tree.py --update-readme
@@ -53,4 +53,3 @@ build:
 	uv build
 	unzip -l dist/*.whl
 	unzip -p dist/*.whl */METADATA
-

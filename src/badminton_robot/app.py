@@ -1,10 +1,9 @@
 """Sample doc string."""
 
-import argparse
-
-from {{ cookiecutter.module_name }}.definitions import DEFAULT_LOG_LEVEL, LogLevel
-from {{ cookiecutter.module_name }}.utils import setup_logger
 from loguru import logger
+
+from badminton_robot.definitions import DEFAULT_LOG_LEVEL
+from badminton_robot.utils import setup_logger
 
 
 def main(

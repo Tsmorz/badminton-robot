@@ -4,14 +4,15 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from {{ cookiecutter.module_name }}.definitions import (
+from loguru import logger
+
+from badminton_robot.definitions import (
     DATE_FORMAT,
     DEFAULT_LOG_FILENAME,
     DEFAULT_LOG_LEVEL,
     ENCODING,
     LOG_DIR,
 )
-from loguru import logger
 
 
 def create_timestamped_filepath(suffix: str, output_dir: Path, prefix: str) -> Path:

@@ -4,7 +4,7 @@ version = "0.0.1alpha"
 description = "Software and hardware for a badminton playing robot."
 readme = "README.md"
 authors = [
-    { name = "Tony Smoragiewicz", email = "tony.smoragiewicz@tum.de" },
+    { name = "Allison Hsu", email = "allisonhsu052209@gmail.com" },
     { name = "Tony Smoragiewicz", email = "tonysmoragiewicz@gmail.com" }
 ]
 requires-python = ">=3.11,<3.14"

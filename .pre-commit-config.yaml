@@ -22,10 +22,3 @@ repos:
 # --------------------------------------------------------
 #  Delegate formatting + linting to your Makefile
 # --------------------------------------------------------
-- repo: local
-  hooks:
-    - id: make-format
-      name: Run format (ruff format + ruff lint)
-      entry: make format
-      language: system
-      types: [python]

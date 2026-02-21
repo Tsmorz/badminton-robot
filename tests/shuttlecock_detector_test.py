@@ -1,55 +1,42 @@
-"""file tests the detector."""
+import cv2
+from ultralytics import YOLO
 
-import os
-import sys
+# Load the standard model
+model = YOLO("yolov8n.pt") 
 
-from loguru import logger
+cap = cv2.VideoCapture(0)
 
-# 1. THE BRIDGE: Tell Python to look inside the 'src' folder.
-# This finds the folder where this script is, goes up one level, and adds 'src'
-current_folder = os.path.dirname(__file__)
-parent_folder = os.path.abspath(os.path.join(current_folder, "..", "src"))
-sys.path.append(parent_folder)
+# The 'Sports Hack': 32 is 'sports ball', 14 is 'bird' (sometimes shuttlecocks look like birds to AI!)
+TARGET_CLASSES = [14, 32] 
 
-# 2. THE IMPORT: Match your folder structure exactly.
-# This means: "Inside the badminton_robot folder, find shuttlecock_detector.py"
-try:
-    from badminton_robot.shuttlecock_detector import ShuttlecockDetector
+while cap.isOpened():
+    success, frame = cap.read()
+    if not success:
+        break
 
-    logger.success("✅ System: Successfully linked to ShuttlecockDetector class.")
-except ImportError as e:
-    logger.error(f"❌ System: Could not find the code. Error: {e}")
-    sys.exit(1)
+    # Run detection only on our target classes
+    results = model(frame, classes=TARGET_CLASSES, conf=0.3)
 
+    for r in results:
+        for box in r.boxes:
+            # Get coordinates of the box: x1, y1 (top left) and x2, y2 (bottom right)
+            x1, y1, x2, y2 = box.xyxy[0]
+            
+            # Calculate the Center Point (This is what the robot needs!)
+            center_x = int((x1 + x2) / 2)
+            center_y = int((y1 + y2) / 2)
 
-def run_test():
-    """Test the shuttlecock detector."""
-    # 3. INITIALIZE: Wake up the AI
-    detector = ShuttlecockDetector()
+            # Print coordinates to the terminal
+            print(f"TARGET DETECTED -> X: {center_x} Y: {center_y}")
 
-    # 4. PATH: The exact location you found with the 'find' command
-    image_path = "data/data/test_image.png"
+            # Draw a small circle at the center point
+            cv2.circle(frame, (center_x, center_y), 5, (0, 255, 0), -1)
 
-    if not os.path.exists(image_path):
-        logger.error(f"❌ Error: Cannot find the image file at: {image_path}")
-        return
+    # Show the video
+    cv2.imshow("Robot Vision - Target Tracking", frame)
 
-    logger.info(f"🔍 Analyzing: {image_path}...")
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
-    # 5. RUN: Ask the detector for the X and Y coordinates
-    try:
-        results = detector.get_location(image_path)
-
-        if results:
-            logger.sucess(f"🎯 SUCCESS! Found {len(results)} shuttlecock(s):")
-            for i, (x, y) in enumerate(results):
-                logger.info(f"   Detection {i + 1}: Pixel X={x}, Pixel Y={y}")
-        else:
-            logger.warning("❓ The AI finished scanning, but didn't see a shuttlecock.")
-
-    except Exception as e:
-        logger.error(f"❌ An error occurred during detection: {e}")
-
-
-if __name__ == "__main__":
-    run_test()
+cap.release()
+cv2.destroyAllWindows()

@@ -2,12 +2,12 @@ import cv2
 from ultralytics import YOLO
 
 # Load the standard model
-model = YOLO("yolov8n.pt") 
+model = YOLO("yolov8n.pt")
 
 cap = cv2.VideoCapture(0)
 
 # The 'Sports Hack': 32 is 'sports ball', 14 is 'bird' (sometimes shuttlecocks look like birds to AI!)
-TARGET_CLASSES = [14, 32] 
+TARGET_CLASSES = [14, 32]
 
 while cap.isOpened():
     success, frame = cap.read()
@@ -21,7 +21,7 @@ while cap.isOpened():
         for box in r.boxes:
             # Get coordinates of the box: x1, y1 (top left) and x2, y2 (bottom right)
             x1, y1, x2, y2 = box.xyxy[0]
-            
+
             # Calculate the Center Point (This is what the robot needs!)
             center_x = int((x1 + x2) / 2)
             center_y = int((y1 + y2) / 2)
@@ -35,7 +35,7 @@ while cap.isOpened():
     # Show the video
     cv2.imshow("Robot Vision - Target Tracking", frame)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
 cap.release()

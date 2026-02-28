@@ -1,6 +1,7 @@
 # src/shuttlecock_detector.py
 from ultralytics import YOLO
 import cv2
+from pathlib import Path
 
 class ShuttlecockDetector:
     def __init__(self, model_path='yolov8n.pt', conf=0.25, iou=0.45, device=''):
@@ -9,18 +10,16 @@ class ShuttlecockDetector:
         self.iou = iou
         self.device = device
         self.model = self.load_model()
-        if class_id == 32:
-            label = "Shuttlecock"
 
     def load_model(self):
-        
+
         self.model = YOLO(self.model_path)
         return self.model
-    
+
     def load_image(self, image_path):
         self.image = cv2.imread(image_path)
         return self.image
-    
+
     def detect(self, image):
         # Run detection
         results = self.model(image)
@@ -46,10 +45,10 @@ class ShuttlecockDetector:
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
-    
+
 
 def main():
-    image_path = "data\data\testimage2.jpeg" # Update this to your test image path
+    image_path = Path("data", "data", "testimage2.jpg") # Update this to your test image path
     detector = ShuttlecockDetector()
     image = detector.load_image(image_path)
     result = detector.detect(image)

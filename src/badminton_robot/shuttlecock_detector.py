@@ -55,9 +55,7 @@ class ShuttlecockDetector:
 
 
 def main():
-    image_path = PurePosixPath(
-        "data", "data", "testimage2.jpg"
-    )  # Update this to your test image path
+    image_path = "data/data/image3.jpg"  # Update this to your test image path
     logger.info(image_path)
     detector = ShuttlecockDetector()
     image = detector.load_image(image_path)

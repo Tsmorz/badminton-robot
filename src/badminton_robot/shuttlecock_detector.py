@@ -1,5 +1,5 @@
 # src/shuttlecock_detector.py
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 import cv2
 from loguru import logger
@@ -55,7 +55,7 @@ class ShuttlecockDetector:
 
 
 def main():
-    image_path = Path(
+    image_path = PurePosixPath(
         "data", "data", "testimage2.jpg"
     )  # Update this to your test image path
     logger.info(image_path)

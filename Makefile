@@ -2,11 +2,10 @@ SHELL := /bin/bash
 
 init:  # ENV SETUP
 	uv sync --extra dev
-	uv run pre-commit install
 	@echo "Environment initialized with uv."
 
 test:
-	uv run pytest --cov=src --cov-report=term-missing --no-cov-on-fail --cov-report=xml --cov-fail-under=75
+	uv run pytest --cov=src --cov-report=term-missing --no-cov-on-fail --cov-report=xml --cov-fail-under=80
 	rm .coverage
 
 lint:
@@ -33,7 +32,6 @@ clean:
 
 update:
 	uv sync --upgrade --all-groups
-	uv run pre-commit autoupdate
 
 update-deep:
 	uv cache clean pypi

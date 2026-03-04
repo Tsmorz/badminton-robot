@@ -19,8 +19,6 @@ ENCODING: str = "utf-8"
 
 DATE_FORMAT = "%Y-%m-%d_%H-%M-%S"
 
-DUMMY_VARIABLE = "dummy_variable"
-
 
 @dataclass
 class LogLevel:
@@ -41,3 +39,9 @@ class LogLevel:
 
 DEFAULT_LOG_LEVEL = LogLevel.info
 DEFAULT_LOG_FILENAME = "log_file"
+
+YOLO_MODEL_FILENAME = "yolov8n.pt"
+
+PERSON_CLASS_ID = 0
+SPORTS_BALL_CLASS_ID = 32
+DEFAULT_YOLO_MODEL_PATH = DATA_DIR / "models" / YOLO_MODEL_FILENAME
